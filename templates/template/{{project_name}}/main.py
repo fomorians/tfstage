@@ -10,22 +10,26 @@ from {{project_name}}.serving import serving_input_fn
 from {{project_name}}.feature_engineering import feature_engineering_fn
 from {{project_name}}.model import model_fn
 
-def generate_experiment_fn(train_filenames, eval_filenames, train_batch_size, eval_batch_size, train_epochs):
+def generate_experiment_fn(train_files, eval_files, train_batch_size, eval_batch_size,
+                           num_epochs, train_steps, eval_steps):
     "Return _experiment_fn for use with learn_runner."
     def _experiment_fn(model_dir):
         train_input_fn = generate_input_fn(
-            filenames=train_filenames,
+            filenames=train_files,
             batch_size=train_batch_size,
-            num_epochs=train_epochs,
+            num_epochs=num_epochs,
             shuffle=True)
 
         eval_input_fn = generate_input_fn(
-            filenames=eval_filenames,
+            filenames=eval_files,
             batch_size=eval_batch_size,
             num_epochs=1,
             shuffle=False)
-        
+
         run_config = tf.contrib.learn.RunConfig()
+
+        # TODO: define hyperparameters, e.g. learning_rate
+        params = {}
 
         estimator = tf.contrib.learn.Estimator(
             model_fn=model_fn,
@@ -50,17 +54,17 @@ def main():
 
     parser.add_argument(
         '--train-files',
-        help='GCS or local paths to training data',
+        help='Train files',
         nargs='+',
         required=True)
     parser.add_argument(
         '--eval-files',
-        help='GCS or local paths to evaluation data',
+        help='Evaluation files',
         nargs='+',
         required=True)
     parser.add_argument(
         '--num-epochs',
-        help='Maximum number of training data epochs on which to train',
+        help='Maximum number of epochs on which to train',
         default=1,
         type=int)
     parser.add_argument(
@@ -90,7 +94,8 @@ def main():
         train_batch_size=train_batch_size,
         eval_batch_size=eval_batch_size,
         num_epochs=args.num_epochs,
-        )
+        train_steps=args.train_steps,
+        eval_steps=args.eval_steps)
     tf.contrib.learn.learn_runner.run(experiment_fn, job_dir)
 
 if __name__ == '__main__':
