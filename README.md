@@ -23,7 +23,8 @@ Project created: ./my_project
 
 ## Ideas
 
-- README setup instructions including conda installation
+- Add documentation to each function describing usage and linking to TF docs
+- README structure, workflow, setup instructions including conda installation
 - Make it work end-to-end with constants so it "runs" without much code
 - Git init and conda/virtualenv init? "Initial commit"?
 - Default to `us-east1` region for GPUs
