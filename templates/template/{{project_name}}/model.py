@@ -40,7 +40,7 @@ def get_train_op(loss, params, mode):
 
     learning_rate = params['learning_rate']
 
-    train_op = optimize_loss(
+    train_op = tf.contrib.layers.optimize_loss(
         loss=loss,
         global_step=global_step,
         learning_rate=learning_rate,
@@ -53,7 +53,7 @@ def get_train_op(loss, params, mode):
 
     return train_op
 
-def model_fn(inputs, labels, params, mode):
+def model_fn(inputs, labels, mode, params):
     "Return ModelFnOps for use with Estimator."
 
     outputs = get_outputs(inputs, params)
@@ -64,4 +64,5 @@ def model_fn(inputs, labels, params, mode):
     return tf.contrib.learn.ModelFnOps(
         predictions=predictions,
         loss=loss,
-        train_op=train_op)
+        train_op=train_op,
+        mode=mode)

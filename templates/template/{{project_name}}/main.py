@@ -8,6 +8,8 @@ from __future__ import division
 import argparse
 import tensorflow as tf
 
+from tensorflow.contrib.learn.python.learn import learn_runner
+
 from {{project_name}}.inputs import generate_input_fn
 from {{project_name}}.serving import serving_input_fn
 from {{project_name}}.feature_engineering import feature_engineering_fn

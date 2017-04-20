@@ -19,8 +19,8 @@ def generate_input_fn(filenames, batch_size, num_epochs=None, shuffle=False):
             #     'label': tf.constant(shape=[32, 1], dtype=tf.int32)
             # }
 
-            inputs = {}
+            features = {}
             labels = {}
 
-            return inputs, labels
+            return features, labels
     return _input_fn
