@@ -100,6 +100,8 @@ def main():
         help='Number of steps to run evaluation at each checkpoint',
         type=int)
 
+    args = parser.parse_args()
+
     tf.logging.set_verbosity(tf.logging.INFO)
 
     experiment_fn = generate_experiment_fn(
