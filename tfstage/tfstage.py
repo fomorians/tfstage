@@ -28,7 +28,7 @@ def generate_project(project_name):
             dest_dir = pystache.render(dest_dir, project_config)
 
             if os.path.exists(dest_dir):
-                print('WARN: {} already exists, exiting...'.format(dest_dir))
+                print('WARN: {} already exists, skipping...'.format(dest_dir))
                 continue
 
             os.mkdir(dest_dir)
@@ -40,7 +40,7 @@ def generate_project(project_name):
             dest_path = pystache.render(dest_path, project_config)
 
             if os.path.exists(dest_path):
-                print('WARN: {} already exists, exiting...'.format(dest_path))
+                print('WARN: {} already exists, skipping...'.format(dest_path))
                 continue
 
             with open(src_path) as f:
