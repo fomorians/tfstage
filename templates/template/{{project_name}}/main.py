@@ -1,5 +1,5 @@
 """
-Main training procedure.
+Main training task.
 """
 from __future__ import absolute_import
 from __future__ import print_function
@@ -30,24 +30,32 @@ def generate_experiment_fn(train_files, eval_files, train_batch_size, eval_batch
 
         run_config = tf.contrib.learn.RunConfig()
 
-        # TODO: define hyperparameters, e.g. learning_rate
+        # TODO: define hyperparameters, e.g. learning rate
         params = {}
 
         estimator = tf.contrib.learn.Estimator(
-            model_fn=model_fn,
             model_dir=model_dir,
+            model_fn=model_fn,
             config=run_config,
             params=params,
             feature_engineering_fn=feature_engineering_fn)
 
+        # TODO: define evaluation metrics, e.g. accuracy
+        eval_metrics = {}
+
         export_strategy = tf.contrib.learn.make_export_strategy(
-            serving_input_fn=serving_input_fn)
+            serving_input_fn=serving_input_fn,
+            exports_to_keep=1)
 
         experiment = tf.contrib.learn.Experiment(
             estimator=estimator,
             train_input_fn=train_input_fn,
             eval_input_fn=eval_input_fn,
-            export_strategies=[export_strategy])
+            export_strategies=[export_strategy],
+            train_steps=train_steps,
+            eval_steps=eval_steps)
+        return experiment
+
     return _experiment_fn
 
 def main():
@@ -63,6 +71,10 @@ def main():
         '--eval-files',
         help='Evaluation files',
         nargs='+',
+        required=True)
+    parser.add_argument(
+        '--job-dir',
+        help='Location to write checkpoints, summaries, and export models',
         required=True)
     parser.add_argument(
         '--num-epochs',
@@ -98,7 +110,7 @@ def main():
         num_epochs=args.num_epochs,
         train_steps=args.train_steps,
         eval_steps=args.eval_steps)
-    tf.contrib.learn.learn_runner.run(experiment_fn, job_dir)
+    tf.contrib.learn.learn_runner.run(experiment_fn, args.job_dir)
 
 if __name__ == '__main__':
     main()

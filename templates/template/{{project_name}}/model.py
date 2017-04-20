@@ -7,9 +7,9 @@ from __future__ import division
 
 import tensorflow as tf
 
-def get_outputs(inputs, params, mode):
+def get_outputs(inputs, params):
     "Return the outputs from the model which will be used in the loss function."
-    # TODO: define outputs, typically the pre-activation outputs (logits) of neural network model
+    # TODO: define outputs, e.g. pre-activation outputs (logits) of neural network
     outputs = None
     return outputs
 
@@ -26,7 +26,7 @@ def get_loss(outputs, labels, params, mode):
     if mode == tf.contrib.learn.ModeKeys.INFER:
         return loss
 
-    # TODO: define loss, e.g. tf.losses.sparse_softmax_cross_entropy
+    # TODO: define loss, e.g. tf.losses.mean_squared_error
     return loss
 
 def get_train_op(loss, params, mode):
@@ -56,7 +56,7 @@ def get_train_op(loss, params, mode):
 def model_fn(inputs, labels, params, mode):
     "Return ModelFnOps for use with Estimator."
 
-    outputs = get_outputs(inputs, params, mode)
+    outputs = get_outputs(inputs, params)
     predictions = get_predictions(outputs)
     loss = get_loss(outputs, labels, params, mode)
     train_op = get_train_op(loss, params, mode)

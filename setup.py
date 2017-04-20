@@ -11,4 +11,7 @@ setup(name='tfstage',
       license='MIT',
       packages=['tfstage'],
       scripts=['bin/tfstage'],
+      install_requires=[
+          'pystache',
+      ],
       zip_safe=False)

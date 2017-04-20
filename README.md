@@ -9,6 +9,7 @@ Project created: ./my_project
 
 - [-] Setup CLI with argparse
 - [] Test with Recurrent Entity Networks
+- [] Setup minimal end-to-end working code using constants
 - [] Setup deploy with Cloud ML
 - [] Setup deploy script with generic interface
 - [] Figure out Sacred?
@@ -22,6 +23,10 @@ Project created: ./my_project
 
 ## Ideas
 
+- README setup instructions including conda installation
+- Make it work end-to-end with constants so it "runs" without much code
+- Git init and conda/virtualenv init? "Initial commit"?
+- Default to `us-east1` region for GPUs
 - Add flag to enable sample code generation
 - Add additional generators for common tasks such as a TFRecords conversion generator
 

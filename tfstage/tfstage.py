@@ -7,7 +7,13 @@ import pystache
 
 def generate_project(project_name):
     """
-    Iterate through the template directory, replace template variables, copy files.
+    Generate a project by following these steps:
+
+        1. Iterate through the template directory
+        2. Replace template variables in path names
+        3. Read files
+        4. Replace template variables in file contents
+        5. Write files to project destination
     """
     project_config = {
         'project_name': project_name,
