@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import division
 
+import argparse
 import tensorflow as tf
 
 from {{project_name}}.inputs import generate_input_fn
