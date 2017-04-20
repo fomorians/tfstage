@@ -1,7 +1,7 @@
-# TensorFlow Scaffold Generator
+# TensorFlow Scaffolding Generator
 
 ```
-$ scaffold my_project
+$ tfstage my_project
 Project created: ./my_project
 ```
 

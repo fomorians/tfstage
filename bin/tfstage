@@ -3,7 +3,7 @@
 import argparse
 import tfstage
 
-parser = argparse.ArgumentParser(description='TensorFlow scaffolding generator.')
+parser = argparse.ArgumentParser(description='TensorFlow Scaffolding Generator')
 parser.add_argument('name', type=str, help='Project name')
 
 args = parser.parse_args()
