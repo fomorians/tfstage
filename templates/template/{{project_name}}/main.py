@@ -12,12 +12,11 @@ from tensorflow.contrib.learn.python.learn import learn_runner
 
 from {{project_name}}.inputs import generate_input_fn
 from {{project_name}}.serving import serving_input_fn
-from {{project_name}}.feature_engineering import feature_engineering_fn
 from {{project_name}}.model import model_fn
 
 def generate_experiment_fn(train_files, eval_files, train_batch_size, eval_batch_size,
                            num_epochs, train_steps, eval_steps):
-    "Return _experiment_fn for use with learn_runner."
+    "Define and return `_experiment_fn` for use with `learn_runner.run`."
     def _experiment_fn(model_dir):
         train_input_fn = generate_input_fn(
             filenames=train_files,
@@ -41,7 +40,7 @@ def generate_experiment_fn(train_files, eval_files, train_batch_size, eval_batch
             model_fn=model_fn,
             config=run_config,
             params=params,
-            feature_engineering_fn=feature_engineering_fn)
+            feature_engineering_fn=None)
 
         # TODO: define evaluation metrics, e.g. accuracy
         eval_metrics = {}
@@ -63,6 +62,7 @@ def generate_experiment_fn(train_files, eval_files, train_batch_size, eval_batch
 
 def main():
     "Entrypoint for training."
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -115,6 +115,7 @@ def main():
         num_epochs=args.num_epochs,
         train_steps=args.train_steps,
         eval_steps=args.eval_steps)
+
     tf.contrib.learn.learn_runner.run(experiment_fn, args.job_dir)
 
 if __name__ == '__main__':

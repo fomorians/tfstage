@@ -7,10 +7,10 @@ Project created: ./my_project
 
 ## TODO
 
-- [-] Setup CLI with argparse
-- [] Test with Recurrent Entity Networks
-- [] Setup minimal end-to-end working code using constants
-- [] Setup deploy with Cloud ML
+- [.] Setup CLI with argparse
+- [.] Test with Recurrent Entity Networks
+- [x] Setup minimal end-to-end working code using constants
+- [.] Setup deploy with Cloud ML
 - [] Setup deploy script with generic interface
 - [] Figure out Sacred?
     Create ex in main with add_config using argparse arguments?
@@ -49,9 +49,9 @@ REGION=us-east1
 ### Generic
 
 ```
-deploy [remote|cloud|local] \
-  --module-name {{project-name}}.main \
-  --package-path . \
+deploy [fomoro|gcloud|local] \
+  -m --module-name $MODULE_NAME \
+  -p --package-path $PACKAGE_PATH \
   -- \
   --job-dir $JOB_DIR \
   with [args]
@@ -61,24 +61,24 @@ deploy [remote|cloud|local] \
 
 ```
 gcloud ml-engine local train \
-    --module-name $MODULE_NAME \
-    --package-path $PACKAGE_PATH \
-    -- \
-    --job-dir $JOB_DIR \
-    with [args]
+  --module-name $MODULE_NAME \
+  --package-path $PACKAGE_PATH \
+  -- \
+  --job-dir $JOB_DIR \
+  [args]
 ```
 
 ### Cloud
 
 ```
 gcloud ml-engine jobs submit training $JOB_NAME \
-  --job-dir $OUTPUT_PATH \
+  --job-dir $JOB_DIR \
   --runtime-version 1.0 \
   --module-name $MODULE_NAME \
   --package-path $PACKAGE_PATH \
   --region $REGION \
   -- \
-  with [args]
+  [args]
 ```
 
 ## References
