@@ -13,7 +13,7 @@ def generate_serving_input_fn():
         # TODO: define feature placeholders
         feature_placeholders = {}
         features = {
-            key: tf.expand_dims(tensor, axis=-1)
+            key: tf.expand_dims(tensor, axis=0)
             for key, tensor in feature_placeholders.items()
         }
         input_fn_ops = tf.contrib.learn.InputFnOps(
