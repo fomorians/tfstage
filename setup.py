@@ -1,9 +1,7 @@
 from setuptools import setup
 
-from tfstage import __version__
-
 setup(name='tfstage',
-      version=__version__,
+      version='0.1.0',
       description='TensorFlow experiment scaffolding.',
       url='http://github.com/fomorians/scaffold',
       author='Jim Fleming',
