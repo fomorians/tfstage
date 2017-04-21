@@ -23,6 +23,8 @@ Project created: ./my_project
 
 ## Ideas
 
+- Move generate_experiment_fn to a separate file
+- Install requirements.txt for you
 - Add documentation to each function describing usage and linking to TF docs
 - README structure, workflow, setup instructions including conda installation
 - Make it work end-to-end with constants so it "runs" without much code

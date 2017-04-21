@@ -11,7 +11,7 @@ import tensorflow as tf
 from tensorflow.contrib.learn.python.learn import learn_runner
 
 from {{project_name}}.inputs import generate_input_fn
-from {{project_name}}.serving import serving_input_fn
+from {{project_name}}.serving import generate_serving_input_fn
 from {{project_name}}.model import model_fn
 
 def generate_experiment_fn(train_files, eval_files, train_batch_size, eval_batch_size,
@@ -45,6 +45,7 @@ def generate_experiment_fn(train_files, eval_files, train_batch_size, eval_batch
         # TODO: define evaluation metrics, e.g. accuracy
         eval_metrics = {}
 
+        serving_input_fn = generate_serving_input_fn()
         export_strategy = tf.contrib.learn.make_export_strategy(
             serving_input_fn=serving_input_fn,
             exports_to_keep=1)
