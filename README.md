@@ -12,10 +12,8 @@ Project created: ./my_project
 Roughly, our workflow consists of the following:
 
 1. Start a new project with `tfstage`
-2. Replace the stock input pipeline with real data
-3. Replace the model with the simplest possible baseline
-4. Train it
-5. Iterate!
+2. Search for "TODO" and write the experiment code
+3. Train and iterate!
 
 ## Setup
 
@@ -90,7 +88,6 @@ REGION=us-east1
 
 gcloud ml-engine jobs submit training $JOB_NAME \
   --job-dir $JOB_DIR \
-  --runtime-version 1.0 \
   --module-name $MODULE_NAME \
   --package-path $PACKAGE_PATH \
   --region $REGION \

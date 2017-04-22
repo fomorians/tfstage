@@ -12,7 +12,7 @@ from {{project_name}}.serve import generate_serving_input_fn
 from {{project_name}}.augment import generate_feature_engineering_fn
 from {{project_name}}.model import model_fn
 
-def generate_experiment_fn(train_batch_size, eval_batch_size, num_epochs, seed):
+def generate_experiment_fn(batch_size, num_epochs, seed):
     """
     Define an `_experiment_fn` to use with [`learn_runner.run`](https://goo.gl/I6TwxA).
     """
@@ -24,12 +24,12 @@ def generate_experiment_fn(train_batch_size, eval_batch_size, num_epochs, seed):
 
     def _experiment_fn(output_dir):
         train_input_fn = generate_input_fn(
-            batch_size=train_batch_size,
+            batch_size=batch_size,
             num_epochs=num_epochs,
             shuffle=True)
 
         eval_input_fn = generate_input_fn(
-            batch_size=eval_batch_size,
+            batch_size=batch_size,
             num_epochs=1,
             shuffle=False)
 

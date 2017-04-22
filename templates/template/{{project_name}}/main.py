@@ -33,13 +33,8 @@ def main():
         type=int,
         default=1000)
     parser.add_argument(
-        '--train-batch-size',
-        help='Batch size for training steps',
-        type=int,
-        default=32)
-    parser.add_argument(
-        '--eval-batch-size',
-        help='Batch size for evaluation steps',
+        '--batch-size',
+        help='Batch size for steps',
         type=int,
         default=32)
     parser.add_argument(
@@ -58,8 +53,7 @@ def main():
     tf.logging.set_verbosity(tf.logging.INFO)
 
     experiment_fn = generate_experiment_fn(
-        train_batch_size=args.train_batch_size,
-        eval_batch_size=args.eval_batch_size,
+        batch_size=args.batch_size,
         num_epochs=args.num_epochs,
         seed=args.seed)
 
