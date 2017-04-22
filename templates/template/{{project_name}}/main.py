@@ -1,11 +1,14 @@
 """
-Main training task.
+Main training and prediction task.
 """
 from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import division
 
+import sys
+import random
 import argparse
+import numpy as np
 import tensorflow as tf
 
 from tensorflow.contrib.learn.python.learn import learn_runner
@@ -13,20 +16,13 @@ from tensorflow.contrib.learn.python.learn import learn_runner
 from {{project_name}}.experiment import generate_experiment_fn
 
 def main():
-    "Entrypoint for training."
+    """
+    Main entrypoint for the training and prediction. Defines command-line
+    arguments and sets up [`learn_runner`](https://goo.gl/I6TwxA).
+    """
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument(
-        '--train-files',
-        help='Train files',
-        nargs='+',
-        required=True)
-    parser.add_argument(
-        '--eval-files',
-        help='Evaluation files',
-        nargs='+',
-        required=True)
     parser.add_argument(
         '--job-dir',
         help='Location to write checkpoints, summaries, and export models',
@@ -34,8 +30,8 @@ def main():
     parser.add_argument(
         '--num-epochs',
         help='Maximum number of epochs on which to train',
-        default=1,
-        type=int)
+        type=int,
+        default=1000)
     parser.add_argument(
         '--train-batch-size',
         help='Batch size for training steps',
@@ -47,28 +43,27 @@ def main():
         type=int,
         default=32)
     parser.add_argument(
-        '--train-steps',
-        help='Number of steps to run training',
-        type=int)
-    parser.add_argument(
-        '--eval-steps',
-        help='Number of steps to run evaluation at each checkpoint',
-        type=int)
+        '--seed',
+        help='Random seed',
+        type=int,
+        default=random.randint(0, 2**32))
 
     args = parser.parse_args()
+
+    # NOTE: set random seed if specified
+    if args.seed is not None:
+        random.seed(args.seed)
+        np.random.seed(args.seed)
 
     tf.logging.set_verbosity(tf.logging.INFO)
 
     experiment_fn = generate_experiment_fn(
-        train_files=args.train_files,
-        eval_files=args.eval_files,
-        train_batch_size=train_batch_size,
-        eval_batch_size=eval_batch_size,
+        train_batch_size=args.train_batch_size,
+        eval_batch_size=args.eval_batch_size,
         num_epochs=args.num_epochs,
-        train_steps=args.train_steps,
-        eval_steps=args.eval_steps)
+        seed=args.seed)
 
-    tf.contrib.learn.learn_runner.run(experiment_fn, args.job_dir)
+    learn_runner.run(experiment_fn, args.job_dir)
 
 if __name__ == '__main__':
     main()

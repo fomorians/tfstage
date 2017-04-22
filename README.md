@@ -1,78 +1,82 @@
-# TensorFlow Scaffolding Generator
+# TF Stage
+
+A fast and canonical project setup for TensorFlow models. The most difficult part of getting started with TensorFlow isn't deep learning, it's putting together hundreds of API calls into a cohesive model.
 
 ```
 $ tfstage my_project
 Project created: ./my_project
 ```
 
-## TODO
+## Workflow
 
-- [.] Setup CLI with argparse
-- [.] Test with Recurrent Entity Networks
-- [x] Setup minimal end-to-end working code using constants
-- [.] Setup deploy with Cloud ML
-- [] Setup deploy script with generic interface
-- [] Figure out Sacred?
-    Create ex in main with add_config using argparse arguments?
-    Won't work b/c logging requires wrapping main.
-    Want:
-    - config saving
-    - stdout/stderr capture
-    - code capture
-    - hooks: Slack / file
+Roughly, our workflow consists of the following:
 
-## Ideas
+1. Start a new project with `tfstage`
+2. Replace the stock input pipeline with real data
+3. Replace the model with the simplest possible baseline
+4. Train it
+5. Iterate!
 
-- Move generate_experiment_fn to a separate file
-- Install requirements.txt for you
-- Add documentation to each function describing usage and linking to TF docs
-- README structure, workflow, setup instructions including conda installation
-- Make it work end-to-end with constants so it "runs" without much code
-- Git init and conda/virtualenv init? "Initial commit"?
-- Default to `us-east1` region for GPUs
-- Add flag to enable sample code generation
-- Add additional generators for common tasks such as a TFRecords conversion generator
+## Setup
+
+```
+# clone the tfstage repo
+$ git clone https://gitlab/fomoro/tfstage 
+
+# install tfstage with pip
+$ pip install -e tfstage/
+
+# create new and empty project directory
+$ mkdir my_project/
+$ cd <my_project>/
+
+$ tfstage my_project
+Project created: ./my_project
+```
 
 ## Environment
 
-```
-PROJECT_ID=$(gcloud config list project --format "value(core.project)")
-BUCKET_NAME=${PROJECT_ID}-data
+High-level description of a new project:
 
-JOB_NAME=$JOB_NAME
-JOB_DIR=$JOB_DIR
-MODULE_NAME=trainer.task
-PACKAGE_PATH=trainer/
-REGION=us-east1
-```
+- main.py: defines command-line arguments and sets up [`learn_runner`](https://goo.gl/I6TwxA)
+- experiment.py: defines a [`tf.contrib.learn.Experiment`](https://goo.gl/nMvwLx) for training
+- inputs.py: defines the input pipeline for training and evaluation
+- model.py: defines the model, loss, and training optimization
+- augment.py: defines any data augmentation or feature engineering
+- serve.py: defines placeholders for [TensorFlow Serving](https://goo.gl/bM3jpA) and [Google Cloud ML Engine predictions](https://goo.gl/yTBv2e).
+- prep.py: utility script for any data pre-processing (such as creating [TFRecords](https://goo.gl/bpm3zW))
 
-## Training
+In addition, several common files are created including:
 
-### Generic
+- README.md
+- requirements.txt
+- .gitignore
 
-```
-deploy [fomoro|gcloud|local] \
-  -m --module-name $MODULE_NAME \
-  -p --package-path $PACKAGE_PATH \
-  -- \
-  --job-dir $JOB_DIR \
-  with [args]
-```
-
-### Local
+### Local Deployment
 
 ```
+PROJECT_NAME=my_project
+MODULE_NAME="${PROJECT_NAME}.main"
+PACKAGE_PATH="${PROJECT_NAME}/"
+JOB_DIR=logs/
+
 gcloud ml-engine local train \
   --module-name $MODULE_NAME \
   --package-path $PACKAGE_PATH \
-  -- \
   --job-dir $JOB_DIR \
+  -- \
   [args]
 ```
 
-### Cloud
+### Cloud Deployment
 
 ```
+MODULE_NAME="${PROJECT_NAME}.main"
+PACKAGE_PATH="${PROJECT_NAME}/"
+JOB_NAME="${PROJECT_NAME}_1"
+JOB_DIR="gs://${PROJECT_NAME}/${JOB_NAME}"
+REGION=us-east1
+
 gcloud ml-engine jobs submit training $JOB_NAME \
   --job-dir $JOB_DIR \
   --runtime-version 1.0 \
@@ -82,21 +86,3 @@ gcloud ml-engine jobs submit training $JOB_NAME \
   -- \
   [args]
 ```
-
-## References
-
-### Cloud ML Engine
-
-- [Cloud ML Engine Getting Started](https://cloud.google.com/ml-engine/docs/how-tos/getting-started-training-prediction)
-- [Cloud ML Engine REST API](https://cloud.google.com/ml-engine/reference/rest/)
-- [Cloud ML Engine Trainer Sample](https://github.com/GoogleCloudPlatform/cloudml-samples/tree/master/census/estimator/trainer)
-
-### Python Packaging
-
-- [Python Packaging](http://python-packaging.readthedocs.io/en/latest/index.html): How To Package Your Python Code
-- [Python Packaging User Guide](https://packaging.python.org/distributing/): Packaging and Distributing Projects
-
-### Python Scaffolding Examples:
-
-- [https://github.com/Aaronontheweb/scaffold-py](scaffold-py) (includes virtualenvwrapper mkproject)
-- [https://github.com/MinweiShen/scaffolding](scaffolding) (uses Django template format)

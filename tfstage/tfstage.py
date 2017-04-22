@@ -3,6 +3,7 @@ from __future__ import print_function
 from __future__ import division
 
 import os
+import pip
 import pystache
 
 def generate_project(project_name):
@@ -58,3 +59,5 @@ def generate_project(project_name):
                 f.write(file_str)
 
     print('Project created: {}'.format(project_dir))
+
+    pip.main(['install', '-r', 'requirements.txt'])

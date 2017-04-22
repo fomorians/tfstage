@@ -1,5 +1,5 @@
 """
-Model, loss, and optimization.
+Model definition, loss, and optimization.
 """
 from __future__ import absolute_import
 from __future__ import print_function
@@ -8,36 +8,63 @@ from __future__ import division
 import tensorflow as tf
 
 def get_outputs(inputs, params):
-    "Return the outputs from the model which will be used in the loss function."
-    # TODO: define outputs, e.g. pre-activation outputs (logits) of neural network
-    outputs = None
+    """
+    Define the model outputs to use in the loss function.
+    """
+    # TODO: define outputs
+    hidden = tf.layers.dense(
+        inputs=inputs,
+        units=3,
+        activation=tf.nn.relu)
+    outputs = tf.layers.dense(
+        inputs=hidden,
+        units=2,
+        activation=None)
     return outputs
 
 def get_predictions(outputs):
-    "Return the actual predictions for use with evaluation metrics or TF Serving."
-    # TODO: define predictions, e.g. tf.argmax(outputs, axis=-1)
-    predictions = None
+    """
+    Define predictions to use with evaluation metrics or TF Serving.
+    """
+    # TODO: define predictions
+    prediction = tf.argmax(outputs, axis=-1)
+
+    predictions = {
+        'prediction': prediction
+    }
+
     return predictions
 
 def get_loss(outputs, labels, params, mode):
-    "Return the loss function which will be used with an optimizer."
+    """
+    Define the loss function to use with an optimizer.
+    """
 
+    # NOTE: `loss` should be `None` during the "infer" mode
     loss = None
     if mode == tf.contrib.learn.ModeKeys.INFER:
         return loss
 
-    # TODO: define loss, e.g. tf.losses.mean_squared_error
+    # TODO: define loss
+    labels = labels['label']
+    loss = tf.losses.sparse_softmax_cross_entropy(
+        logits=outputs,
+        labels=labels)
+
     return loss
 
 def get_train_op(loss, params, mode):
-    "Return the trainining operation which will be used to train the model."
+    """
+    Define the training operation which will be used to optimize the model.
+    Uses [`tf.contrib.layers.optimize_loss`](https://goo.gl/z1PswO).
+    """
 
+    # NOTE: `train_op` should be `None` outside of the "train" mode
     train_op = None
     if mode != tf.contrib.learn.ModeKeys.TRAIN:
         return train_op
 
     global_step = tf.contrib.framework.get_or_create_global_step()
-
     learning_rate = params['learning_rate']
 
     train_op = tf.contrib.layers.optimize_loss(
@@ -53,8 +80,13 @@ def get_train_op(loss, params, mode):
 
     return train_op
 
-def model_fn(inputs, labels, mode, params):
-    "Return ModelFnOps for use with Estimator."
+def model_fn(features, labels, mode, params):
+    """
+    Define model and return [tf.contrib.learnModelFnOps](https://goo.gl/lXcvV8)
+    for use with [tf.contrib.learn.Estimator](https://goo.gl/Ez2AgV).
+    """
+
+    inputs = features['inputs']
 
     outputs = get_outputs(inputs, params)
     predictions = get_predictions(outputs)

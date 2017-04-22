@@ -7,20 +7,49 @@ from __future__ import division
 
 import tensorflow as tf
 
-def generate_input_fn(filenames, batch_size, num_epochs=None, shuffle=False):
-    "Return _input_fn for use with Experiment."
-    def _input_fn():
-        with tf.device('/cpu:0'):
-            # TODO: define inputs and labels
-            # inputs = {
-            #     'image': tf.constant(shape=[32, 128, 128, 3], dtype=tf.float32)
-            # }
-            # labels = {
-            #     'label': tf.constant(shape=[32, 1], dtype=tf.int32)
-            # }
+def generate_input_fn(batch_size, num_epochs=None, shuffle=False):
+    """
+    Define `_input_fn` to use with [`tf.contrib.learn.Experiment`](https://goo.gl/ttzJ9M).
 
-            features = {}
-            labels = {}
+    See [Building Input Functions with tf.contrib.learn](https://goo.gl/Thdr6r) for more info.
+    """
+
+    def _input_fn():
+        # NOTE: always place the input pipeline on the CPU
+        with tf.device('/cpu:0'):
+
+            # TODO: define features and labels
+            truth_table = tf.constant([
+                [0, 0, 0],
+                [0, 1, 1],
+                [1, 0, 1],
+                [1, 1, 0],
+            ], dtype=tf.int32)
+
+            all_inputs = truth_table[:2]
+            all_labels = truth_table[2]
+
+            inputs, label = tf.train.slice_input_producer(
+                tensor_list=[all_inputs, all_labels],
+                num_epochs=num_epochs,
+                shuffle=shuffle)
+
+            inputs_batch, labels_batch = tf.train.batch(
+                tensors=[inputs, label],
+                batch_size=batch_size,
+                allow_smaller_final_batch=True)
+
+            inputs_batch = tf.to_float(inputs_batch)
+
+            # NOTE: must be a dictionary for exporting
+            features = {
+                'inputs': inputs_batch
+            }
+
+            labels = {
+                'label': labels_batch
+            }
 
             return features, labels
+
     return _input_fn
