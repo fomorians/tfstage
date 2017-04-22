@@ -21,29 +21,29 @@ Roughly, our workflow consists of the following:
 
 1. Clone the tfstage repo:
 
-```
-$ git clone https://gitlab/fomoro/tfstage 
-```
+    ```
+    $ git clone https://gitlab/fomoro/tfstage 
+    ```
 
 2. Install tfstage with pip:
 
-```
-$ pip install -e tfstage/
-```
+    ```
+    $ pip install -e tfstage/
+    ```
 
 3. Create a new empty project directory
 
-```
-$ mkdir my_project/
-$ cd <my_project>/
-```
+    ```
+    $ mkdir my_project/
+    $ cd <my_project>/
+    ```
 
 4. Run `tfstage`:
 
-```
-$ tfstage my_project
-Project created: ./my_project
-```
+    ```
+    $ tfstage my_project
+    Project created: ./my_project
+    ```
 
 ## Environment
 
