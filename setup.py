@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(name='tfstage',
       version='0.1.0',
-      description='TensorFlow experiment scaffolding.',
-      url='http://github.com/fomorians/scaffold',
+      description='TensorFlow project scaffolding',
+      url='http://github.com/fomorians/tfstage',
       author='Jim Fleming',
       author_email='jim@fomoro.com',
       license='MIT',
