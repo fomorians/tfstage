@@ -3,8 +3,16 @@
 A fast and canonical project setup for TensorFlow models. The most difficult part of getting started with TensorFlow isn't deep learning, it's putting together hundreds of API calls into a cohesive model.
 
 ```
-$ tfstage my_project
-Project created: ./my_project
+$ tfstage --help
+usage: tfstage [-h] name
+
+TensorFlow project scaffolding
+
+positional arguments:
+  name        Project name
+
+optional arguments:
+  -h, --help  show this help message and exit
 ```
 
 ## Workflow
@@ -53,12 +61,12 @@ High-level description of a new project:
 - model.py: defines the model, loss, and training optimization
 - augment.py: defines any data augmentation or feature engineering
 - serve.py: defines placeholders for [TensorFlow Serving](https://goo.gl/bM3jpA) and [Google Cloud ML Engine predictions](https://goo.gl/yTBv2e).
-- prep.py: utility script for any data pre-processing (such as creating [TFRecords](https://goo.gl/bpm3zW))
 
 In addition, several common files are created including:
 
 - README.md
 - requirements.txt
+- setup.py (NOTE: requirements should be defined here, not requirements.txt to support GCE)
 - .gitignore
 
 ### Local Deployment
