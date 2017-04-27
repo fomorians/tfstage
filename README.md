@@ -65,8 +65,8 @@ High-level description of a new project:
 In addition, several common files are created including:
 
 - README.md
-- requirements.txt
-- setup.py (NOTE: requirements should be defined here, not requirements.txt to support GCE)
+- requirements.txt for local _development_
+- setup.py for local and GCE _deployment_
 - .gitignore
 
 ### Local Deployment
