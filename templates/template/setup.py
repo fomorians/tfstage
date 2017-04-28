@@ -1,9 +1,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-REQUIRED_PACKAGES = [
-    'tensorflow-gpu==1.1.0'
-]
+REQUIRED_PACKAGES = []
 
 setup(name='{{project_name}}',
       version='0.1',

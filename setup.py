@@ -10,6 +10,7 @@ setup(name='tfstage',
       packages=['tfstage'],
       scripts=['bin/tfstage'],
       install_requires=[
-          'pystache',
+          'termcolor',
+          'pystache'
       ],
       zip_safe=False)
