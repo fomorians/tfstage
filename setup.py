@@ -10,7 +10,7 @@ with open(path.join(HERE, 'README.rst')) as f:
     LONG_DESCRIPTION = f.read()
 
 setup(name='tfstage',
-      version='0.1.0',
+      version='0.1.1',
       description='TensorFlow project scaffolding',
       long_description=LONG_DESCRIPTION,
       url='http://github.com/fomorians/tfstage',
