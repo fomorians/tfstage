@@ -28,7 +28,7 @@ def generate_serving_input_fn():
             for key, tensor in feature_placeholders.items()
         }
 
-        input_fn_ops = tf.contrib.learn.InputFnOps(
+        input_fn_ops = tf.contrib.learn.utils.input_fn_utils.InputFnOps(
             features=features,
             labels=None,
             default_inputs=feature_placeholders)

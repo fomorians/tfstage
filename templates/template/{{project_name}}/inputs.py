@@ -7,7 +7,7 @@ from __future__ import division
 
 import tensorflow as tf
 
-def generate_input_fn(batch_size, num_epochs=None, shuffle=False):
+def generate_input_fn(data_dir, batch_size, num_epochs=None, shuffle=False):
     """
     Define `_input_fn` to use with [`tf.contrib.learn.Experiment`](https://goo.gl/ttzJ9M).
 

@@ -24,6 +24,9 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
+        '--data-dir',
+        help='Location for data')
+    parser.add_argument(
         '--job-dir',
         help='Location to write checkpoints, summaries, and export models',
         required=True)
@@ -53,6 +56,7 @@ def main():
     tf.logging.set_verbosity(tf.logging.INFO)
 
     experiment_fn = generate_experiment_fn(
+        data_dir=args.data_dir,
         batch_size=args.batch_size,
         num_epochs=args.num_epochs,
         seed=args.seed)

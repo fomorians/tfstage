@@ -12,7 +12,7 @@ from {{project_name}}.serve import generate_serving_input_fn
 from {{project_name}}.augment import generate_feature_engineering_fn
 from {{project_name}}.model import model_fn
 
-def generate_experiment_fn(batch_size, num_epochs, seed):
+def generate_experiment_fn(data_dir, batch_size, num_epochs, seed):
     """
     Define an `_experiment_fn` to use with [`learn_runner.run`](https://goo.gl/I6TwxA).
     """
@@ -24,11 +24,13 @@ def generate_experiment_fn(batch_size, num_epochs, seed):
 
     def _experiment_fn(output_dir):
         train_input_fn = generate_input_fn(
+            data_dir=data_dir,
             batch_size=batch_size,
             num_epochs=num_epochs,
             shuffle=True)
 
         eval_input_fn = generate_input_fn(
+            data_dir=data_dir,
             batch_size=batch_size,
             num_epochs=1,
             shuffle=False)
@@ -55,8 +57,8 @@ def generate_experiment_fn(batch_size, num_epochs, seed):
 
         serving_input_fn = generate_serving_input_fn()
 
-        export_strategy = tf.contrib.learn.make_export_strategy(
-            serving_input_fn=serving_input_fn,
+        export_strategy = tf.contrib.learn.utils.make_export_strategy(
+            export_input_fn=serving_input_fn,
             exports_to_keep=1)
 
         experiment = tf.contrib.learn.Experiment(
