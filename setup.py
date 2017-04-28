@@ -6,7 +6,7 @@ from os import path
 from setuptools import setup
 
 HERE = path.abspath(path.dirname(__file__))
-with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(HERE, 'README.rst')) as f:
     LONG_DESCRIPTION = f.read()
 
 setup(name='tfstage',
