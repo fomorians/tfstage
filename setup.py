@@ -5,9 +5,7 @@ Setup module.
 from os import path
 from setuptools import setup
 
-REQUIRED_PACKAGES = []
 HERE = path.abspath(path.dirname(__file__))
-
 with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
@@ -19,6 +17,14 @@ setup(name='tfstage',
       author='Jim Fleming',
       author_email='jim@fomoro.com',
       license='MIT',
+      keywords='tensorflow scaffold scaffolding',
+      classifiers=[
+          'Development Status :: 2 - Pre-Alpha',
+          'Intended Audience :: Developers',
+          'Topic :: Software Development :: Code Generators',
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 2.7',
+      ],
       packages=['tfstage'],
       scripts=['bin/tfstage'],
       install_requires=[
