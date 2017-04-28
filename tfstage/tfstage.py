@@ -5,6 +5,11 @@ from __future__ import division
 import os
 import pip
 import pystache
+import termcolor
+
+def print_warn(text):
+    warning = termcolor.colored('WARNING:', color='yellow', attrs=['bold'])
+    print(warning + ' ' + text)
 
 def generate_project(project_name):
     """
@@ -35,7 +40,7 @@ def generate_project(project_name):
             dest_dir = pystache.render(dest_dir, project_config)
 
             if os.path.exists(dest_dir):
-                print('WARN: {} already exists, skipping...'.format(dest_dir))
+                print_warn('{} already exists, skipping...'.format(dest_dir))
                 continue
 
             os.mkdir(dest_dir)
@@ -47,7 +52,7 @@ def generate_project(project_name):
             dest_path = pystache.render(dest_path, project_config)
 
             if os.path.exists(dest_path):
-                print('WARN: {} already exists, skipping...'.format(dest_path))
+                print_warn('{} already exists, skipping...'.format(dest_path))
                 continue
 
             with open(src_path) as f:
