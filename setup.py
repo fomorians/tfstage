@@ -2,11 +2,12 @@
 Setup module.
 """
 
-from os import path
-from setuptools import setup
+import os
 
-HERE = path.abspath(path.dirname(__file__))
-with open(path.join(HERE, 'README.rst')) as f:
+from setuptools import find_packages, setup
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(HERE, 'README.rst')) as f:
     LONG_DESCRIPTION = f.read()
 
 setup(name='tfstage',
@@ -25,10 +26,12 @@ setup(name='tfstage',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 2.7',
       ],
-      packages=['tfstage'],
+      packages=find_packages(),
+      package_data={'tfstage': ['*']},
       scripts=['bin/tfstage'],
       install_requires=[
           'termcolor',
           'pystache'
       ],
+      include_package_data=True,
       zip_safe=False)

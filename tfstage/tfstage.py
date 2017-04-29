@@ -11,6 +11,10 @@ def print_warn(text):
     warning = termcolor.colored('WARNING:', color='yellow', attrs=['bold'])
     print(warning + ' ' + text)
 
+def print_error(text):
+    error = termcolor.colored('ERROR:', color='red', attrs=['bold'])
+    print(error + ' ' + text)
+
 def generate_project(project_name):
     """
     Generate a project by following these steps:
@@ -28,8 +32,12 @@ def generate_project(project_name):
     # Copy template to current directory
     template_dir = os.path.abspath(os.path.join(
         os.path.dirname(__file__),
-        '..', 'templates', 'template'))
+        'templates', 'template'))
     project_dir = os.getcwd()
+
+    if not os.path.exists(template_dir):
+        print_error('{} containing templates does not exist'.format(template_dir))
+        exit(1)
 
     # Recurse files and directories, replacing their filename with the
     # template string and the file contents with the template strings.
@@ -46,6 +54,10 @@ def generate_project(project_name):
             os.mkdir(dest_dir)
 
         for filename in files:
+            _, extension = os.path.splitext(filename)
+            if extension == '.pyc':
+                continue
+
             src_path = os.path.join(root, filename)
 
             dest_path = os.path.normpath(os.path.join(project_dir, rel_root, filename))
