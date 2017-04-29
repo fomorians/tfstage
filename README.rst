@@ -25,26 +25,20 @@ Roughly, our workflow consists of the following:
 
 ## Setup
 
-1. Clone the tfstage repo:
+1. Install `tfstage`:
 
     ```
-    $ git clone https://gitlab/fomoro/tfstage 
+    pip install tfstage
     ```
 
-2. Install tfstage with pip:
-
-    ```
-    $ pip install -e tfstage/
-    ```
-
-3. Create a new empty project directory
+2. Create a new empty project directory
 
     ```
     $ mkdir my_project/
     $ cd <my_project>/
     ```
 
-4. Run `tfstage`:
+3. Run `tfstage`:
 
     ```
     $ tfstage my_project
