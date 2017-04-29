@@ -7,7 +7,7 @@ import os
 from setuptools import find_packages, setup
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(HERE, 'README.rst')) as f:
+with open(os.path.join(HERE, 'README')) as f:
     LONG_DESCRIPTION = f.read()
 
 setup(name='tfstage',
