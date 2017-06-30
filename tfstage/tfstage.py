@@ -15,7 +15,7 @@ def print_error(text):
     error = termcolor.colored('ERROR:', color='red', attrs=['bold'])
     print(error + ' ' + text)
 
-def generate_project(project_name):
+def generate_project(project_name, install_dependencies=False):
     """
     Generate a project by following these steps:
 
@@ -77,4 +77,5 @@ def generate_project(project_name):
 
     print('Project created: {}'.format(project_dir))
 
-    pip.main(['install', '-r', 'requirements.txt'])
+    if install_dependencies:
+        pip.main(['install', '-r', 'requirements.txt'])

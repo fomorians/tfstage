@@ -5,6 +5,7 @@ import tfstage
 
 parser = argparse.ArgumentParser(description='TensorFlow project scaffolding')
 parser.add_argument('name', type=str, help='Project name')
+parser.add_argument('install_dependencies', action='store_true', help='Install pip dependencies')
 
 args = parser.parse_args()
 
