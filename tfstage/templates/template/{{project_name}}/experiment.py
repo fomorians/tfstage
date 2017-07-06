@@ -58,7 +58,7 @@ def generate_experiment_fn(data_dir, batch_size, num_epochs, seed):
         serving_input_fn = generate_serving_input_fn()
 
         export_strategy = tf.contrib.learn.utils.make_export_strategy(
-            export_input_fn=serving_input_fn,
+            serving_input_fn=serving_input_fn,
             exports_to_keep=1)
 
         experiment = tf.contrib.learn.Experiment(
