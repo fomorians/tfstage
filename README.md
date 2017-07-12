@@ -35,10 +35,10 @@ Roughly, our workflow consists of the following:
 
     ```
     $ mkdir my_project/
-    $ cd <my_project>/
+    $ cd my_project/
     ```
 
-3. Run `tfstage`:
+3. Run `tfstage my_project`:
 
     ```
     $ tfstage my_project
