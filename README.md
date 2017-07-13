@@ -45,14 +45,17 @@ Roughly, our workflow consists of the following:
     Project created: ./my_project
     ```
 
-4. This stubs out an entire TensorFlow project, completely runnable using a simple XOR dataset and model. For example,
+4. This stubs out an entire TensorFlow project, completely runnable using a simple XOR dataset and model. For example:
 
     ```
     $ python -m my_project.main --job-dir logs/
-    INFO:tensorflow:Using config: {'_model_dir': None, '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_tf_random_seed': 2780097556, '_task_type': None, '_environment': 'local', '_is_chief': True, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x11f2b4110>, '_tf_config': gpu_options {
-      per_process_gpu_memory_fraction: 1
-    }
-    , '_num_worker_replicas': 0, '_task_id': 0, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_evaluation_master': '', '_keep_checkpoint_every_n_hours': 10000, '_master': ''}
+
+    ...
+    
+    INFO:tensorflow:Saving checkpoints for 1 into logs/model.ckpt.
+    INFO:tensorflow:loss = 1.20236, step = 1
+    INFO:tensorflow:Starting evaluation at 2017-07-13-18:22:20
+    INFO:tensorflow:Restoring parameters from logs/model.ckpt-1
     
     ...
     ```
