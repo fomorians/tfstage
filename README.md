@@ -9,10 +9,11 @@ usage: tfstage [-h] name
 TensorFlow project scaffolding
 
 positional arguments:
-  name        Project name
+  name                  Project name
+  install_dependencies  Install pip dependencies
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help            show this help message and exit
 ```
 
 ## Usage
