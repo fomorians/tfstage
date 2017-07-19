@@ -15,15 +15,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-## Workflow
-
-Roughly, our workflow consists of the following:
-
-1. Start a new project with `tfstage`
-2. Search for "TODO" and write the experiment code
-3. Train and iterate!
-
-## Setup
+## Usage
 
 1. Install `tfstage`:
 
@@ -59,6 +51,10 @@ Roughly, our workflow consists of the following:
     
     ...
     ```
+
+## Workflow
+
+When starting a new project we run `tfstage`, run the code to verify everything works, then search and replace the `TODO` comments in the code which mark important changes.
 
 ## Environment
 
