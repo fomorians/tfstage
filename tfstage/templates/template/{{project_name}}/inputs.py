@@ -24,10 +24,10 @@ def generate_input_fn(data_dir, batch_size, num_epochs=None, shuffle=False):
                 [0, 1, 1],
                 [1, 0, 1],
                 [1, 1, 0],
-            ], dtype=tf.int32)
+            ], dtype=tf.float32)
 
-            all_inputs = truth_table[:2]
-            all_labels = truth_table[2]
+            all_inputs = truth_table[..., :2]
+            all_labels = truth_table[..., 2:]
 
             inputs, label = tf.train.slice_input_producer(
                 tensor_list=[all_inputs, all_labels],
@@ -38,8 +38,6 @@ def generate_input_fn(data_dir, batch_size, num_epochs=None, shuffle=False):
                 tensors=[inputs, label],
                 batch_size=batch_size,
                 allow_smaller_final_batch=True)
-
-            inputs_batch = tf.to_float(inputs_batch)
 
             # NOTE: must be a dictionary for exporting
             features = {

@@ -39,7 +39,7 @@ def main():
         '--batch-size',
         help='Batch size for steps',
         type=int,
-        default=32)
+        default=1)
     parser.add_argument(
         '--seed',
         help='Random seed',

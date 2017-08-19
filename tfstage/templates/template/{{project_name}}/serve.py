@@ -16,7 +16,7 @@ def generate_serving_input_fn():
     def _serving_input_fn():
         # TODO: define feature placeholders
         inputs = tf.placeholder(
-            shape=[3],
+            shape=[2],
             dtype=tf.float32)
 
         feature_placeholders = {

@@ -19,7 +19,7 @@ def generate_experiment_fn(data_dir, batch_size, num_epochs, seed):
 
     # TODO: define hyperparameters
     params = {
-        'learning_rate': 1e-2
+        'learning_rate': 1e-3
     }
 
     def _experiment_fn(output_dir):
@@ -60,6 +60,7 @@ def generate_experiment_fn(data_dir, batch_size, num_epochs, seed):
         export_strategy = tf.contrib.learn.utils.make_export_strategy(
             serving_input_fn=serving_input_fn,
             exports_to_keep=1)
+        export_strategies = [export_strategy]
 
         experiment = tf.contrib.learn.Experiment(
             estimator=estimator,
@@ -67,7 +68,7 @@ def generate_experiment_fn(data_dir, batch_size, num_epochs, seed):
             eval_input_fn=eval_input_fn,
             eval_metrics=eval_metrics,
             eval_steps=None,
-            export_strategies=[export_strategy])
+            export_strategies=export_strategies)
         return experiment
 
     return _experiment_fn

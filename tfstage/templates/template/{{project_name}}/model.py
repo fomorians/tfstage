@@ -7,27 +7,27 @@ from __future__ import division
 
 import tensorflow as tf
 
-def get_outputs(inputs, params):
+def get_logits(inputs, params):
     """
-    Define the model outputs to use in the loss function.
+    Define the model logits to use in the loss function.
     """
-    # TODO: define outputs
+    # TODO: define logits
     hidden = tf.layers.dense(
         inputs=inputs,
         units=3,
         activation=tf.nn.relu)
-    outputs = tf.layers.dense(
+    logits = tf.layers.dense(
         inputs=hidden,
-        units=2,
+        units=1,
         activation=None)
-    return outputs
+    return logits
 
-def get_predictions(outputs):
+def get_predictions(logits):
     """
     Define predictions to use with evaluation metrics or TF Serving.
     """
     # TODO: define predictions
-    prediction = tf.argmax(outputs, axis=-1)
+    prediction = tf.round(tf.nn.sigmoid(logits))
 
     predictions = {
         'prediction': prediction
@@ -35,7 +35,7 @@ def get_predictions(outputs):
 
     return predictions
 
-def get_loss(outputs, labels, params, mode):
+def get_loss(logits, labels, params, mode):
     """
     Define the loss function to use with an optimizer.
     """
@@ -46,10 +46,10 @@ def get_loss(outputs, labels, params, mode):
         return loss
 
     # TODO: define loss
-    labels = labels['label']
-    loss = tf.losses.sparse_softmax_cross_entropy(
-        logits=outputs,
-        labels=labels)
+    multi_class_labels = labels['label']
+    loss = tf.losses.sigmoid_cross_entropy(
+        multi_class_labels=multi_class_labels,
+        logits=logits)
 
     return loss
 
@@ -71,7 +71,7 @@ def get_train_op(loss, params, mode):
         loss=loss,
         global_step=global_step,
         learning_rate=learning_rate,
-        optimizer='Adam',
+        optimizer='RMSProp',
         gradient_noise_scale=None,
         gradient_multipliers=None,
         clip_gradients=None,
@@ -88,9 +88,9 @@ def model_fn(features, labels, mode, params):
 
     inputs = features['inputs']
 
-    outputs = get_outputs(inputs, params)
-    predictions = get_predictions(outputs)
-    loss = get_loss(outputs, labels, params, mode)
+    logits = get_logits(inputs, params)
+    predictions = get_predictions(logits)
+    loss = get_loss(logits, labels, params, mode)
     train_op = get_train_op(loss, params, mode)
 
     return tf.contrib.learn.ModelFnOps(
