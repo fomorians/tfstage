@@ -9,21 +9,14 @@ usage: tfstage [-h] name
 TensorFlow project scaffolding
 
 positional arguments:
-  name        Project name
+  name                  Project name
+  install_dependencies  Install pip dependencies
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help            show this help message and exit
 ```
 
-## Workflow
-
-Roughly, our workflow consists of the following:
-
-1. Start a new project with `tfstage`
-2. Search for "TODO" and write the experiment code
-3. Train and iterate!
-
-## Setup
+## Usage
 
 1. Install `tfstage`:
 
@@ -35,15 +28,34 @@ Roughly, our workflow consists of the following:
 
     ```
     $ mkdir my_project/
-    $ cd <my_project>/
+    $ cd my_project/
     ```
 
-3. Run `tfstage`:
+3. Run `tfstage my_project`:
 
     ```
     $ tfstage my_project
     Project created: ./my_project
     ```
+
+4. This stubs out an entire TensorFlow project, completely runnable using a simple XOR dataset and model. For example:
+
+    ```
+    $ python -m my_project.main --job-dir logs/
+
+    ...
+    
+    INFO:tensorflow:Saving checkpoints for 1 into logs/model.ckpt.
+    INFO:tensorflow:loss = 1.20236, step = 1
+    INFO:tensorflow:Starting evaluation at 2017-07-13-18:22:20
+    INFO:tensorflow:Restoring parameters from logs/model.ckpt-1
+    
+    ...
+    ```
+
+## Workflow
+
+When starting a new project we run `tfstage`, run the code to verify everything works, then search and replace the `TODO` comments in the code which mark important changes.
 
 ## Environment
 
